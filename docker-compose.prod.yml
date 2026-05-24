@@ -1,0 +1,501 @@
+
+
+services:
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # NGINX LOAD BALANCER
+  # ═══════════════════════════════════════════════════════════════════════════════
+  nginx-lb:
+    image: nginx:1.25-alpine
+    container_name: shadiro-nginx-lb
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      backend-1:
+        condition: service_healthy
+      backend-2:
+        condition: service_healthy
+      backend-3:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - shadiro-prod-net
+
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # FastAPI APP SERVERS (3 INSTANCES)
+  # ═══════════════════════════════════════════════════════════════════════════════
+  backend-1:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: shadiro-backend:latest
+    container_name: shadiro-backend-1
+    restart: unless-stopped
+    environment:
+      MONGO_URL: mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-secure_root_password_change_in_production}@mongodb-node-1:27017,mongodb-node-2:27017,mongodb-node-3:27017/?authSource=admin&replicaSet=rs0
+      DB_NAME: ${DB_NAME:-shadiro_db}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-secure_long_random_jwt_secret_key_change_in_production}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://shadiro.com,https://www.shadiro.com}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://shadiro.com,https://www.shadiro.com}
+      REDIS_URL: redis://redis-node-1:6379/0
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:-}
+      RAZORPAY_PAYOUT_ACCOUNT_NUMBER: ${RAZORPAY_PAYOUT_ACCOUNT_NUMBER:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      CLOUDINARY_NAME: ${CLOUDINARY_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+    depends_on:
+      mongodb-init:
+        condition: service_completed_successfully
+      redis-init:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - shadiro-prod-net
+
+  backend-2:
+    image: shadiro-backend:latest
+    container_name: shadiro-backend-2
+    restart: unless-stopped
+    environment:
+      MONGO_URL: mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-secure_root_password_change_in_production}@mongodb-node-1:27017,mongodb-node-2:27017,mongodb-node-3:27017/?authSource=admin&replicaSet=rs0
+      DB_NAME: ${DB_NAME:-shadiro_db}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-secure_long_random_jwt_secret_key_change_in_production}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://shadiro.com,https://www.shadiro.com}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://shadiro.com,https://www.shadiro.com}
+      REDIS_URL: redis://redis-node-1:6379/0
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:-}
+      RAZORPAY_PAYOUT_ACCOUNT_NUMBER: ${RAZORPAY_PAYOUT_ACCOUNT_NUMBER:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      CLOUDINARY_NAME: ${CLOUDINARY_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+    depends_on:
+      backend-1:
+        condition: service_healthy
+      mongodb-init:
+        condition: service_completed_successfully
+      redis-init:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - shadiro-prod-net
+
+  backend-3:
+    image: shadiro-backend:latest
+    container_name: shadiro-backend-3
+    restart: unless-stopped
+    environment:
+      MONGO_URL: mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-secure_root_password_change_in_production}@mongodb-node-1:27017,mongodb-node-2:27017,mongodb-node-3:27017/?authSource=admin&replicaSet=rs0
+      DB_NAME: ${DB_NAME:-shadiro_db}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-secure_long_random_jwt_secret_key_change_in_production}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://shadiro.com,https://www.shadiro.com}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://shadiro.com,https://www.shadiro.com}
+      REDIS_URL: redis://redis-node-1:6379/0
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:-}
+      RAZORPAY_PAYOUT_ACCOUNT_NUMBER: ${RAZORPAY_PAYOUT_ACCOUNT_NUMBER:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      CLOUDINARY_NAME: ${CLOUDINARY_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+    depends_on:
+      backend-1:
+        condition: service_healthy
+      mongodb-init:
+        condition: service_completed_successfully
+      redis-init:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - shadiro-prod-net
+
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # MONGODB REPLICA SET (3 NODES)
+  # ═══════════════════════════════════════════════════════════════════════════════
+  mongodb-node-1:
+    image: mongo:4.4
+    container_name: shadiro-mongo-node-1
+    restart: unless-stopped
+    command: mongod --replSet rs0 --bind_ip_all
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-secure_root_password_change_in_production}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data_1:/data/db
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  mongodb-node-2:
+    image: mongo:4.4
+    container_name: shadiro-mongo-node-2
+    restart: unless-stopped
+    command: mongod --replSet rs0 --bind_ip_all
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-secure_root_password_change_in_production}
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data_2:/data/db
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  mongodb-node-3:
+    image: mongo:4.4
+    container_name: shadiro-mongo-node-3
+    restart: unless-stopped
+    command: mongod --replSet rs0 --bind_ip_all
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-secure_root_password_change_in_production}
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongodb_data_3:/data/db
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  mongodb-init:
+    image: mongo:4.4
+    container_name: shadiro-mongo-init
+    volumes:
+      - ./scripts/mongo-init.sh:/mongo-init.sh:ro
+    command: sh /mongo-init.sh
+    depends_on:
+      mongodb-node-1:
+        condition: service_healthy
+      mongodb-node-2:
+        condition: service_healthy
+      mongodb-node-3:
+        condition: service_healthy
+    networks:
+      - shadiro-prod-net
+
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # REDIS CLUSTER (6 NODES)
+  # ═══════════════════════════════════════════════════════════════════════════════
+  redis-node-1:
+    image: redis:7-alpine
+    container_name: shadiro-redis-node-1
+    restart: unless-stopped
+    command: redis-server --port 6379 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --protected-mode no
+    volumes:
+      - redis_data_1:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  redis-node-2:
+    image: redis:7-alpine
+    container_name: shadiro-redis-node-2
+    restart: unless-stopped
+    command: redis-server --port 6379 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --protected-mode no
+    volumes:
+      - redis_data_2:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  redis-node-3:
+    image: redis:7-alpine
+    container_name: shadiro-redis-node-3
+    restart: unless-stopped
+    command: redis-server --port 6379 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --protected-mode no
+    volumes:
+      - redis_data_3:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  redis-node-4:
+    image: redis:7-alpine
+    container_name: shadiro-redis-node-4
+    restart: unless-stopped
+    command: redis-server --port 6379 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --protected-mode no
+    volumes:
+      - redis_data_4:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  redis-node-5:
+    image: redis:7-alpine
+    container_name: shadiro-redis-node-5
+    restart: unless-stopped
+    command: redis-server --port 6379 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --protected-mode no
+    volumes:
+      - redis_data_5:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  redis-node-6:
+    image: redis:7-alpine
+    container_name: shadiro-redis-node-6
+    restart: unless-stopped
+    command: redis-server --port 6379 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --protected-mode no
+    volumes:
+      - redis_data_6:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shadiro-prod-net
+
+  redis-init:
+    image: redis:7-alpine
+    container_name: shadiro-redis-init
+    volumes:
+      - ./scripts/redis-init.sh:/redis-init.sh:ro
+    command: sh /redis-init.sh
+    depends_on:
+      redis-node-1:
+        condition: service_healthy
+      redis-node-2:
+        condition: service_healthy
+      redis-node-3:
+        condition: service_healthy
+      redis-node-4:
+        condition: service_healthy
+      redis-node-5:
+        condition: service_healthy
+      redis-node-6:
+        condition: service_healthy
+    networks:
+      - shadiro-prod-net
+
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # OBSERVABILITY & EXPORTERS
+  # ═══════════════════════════════════════════════════════════════════════════════
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: shadiro-prometheus-prod
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./backend/monitoring/prometheus/prometheus.prod.yml:/etc/prometheus/prometheus.yml:ro
+      - ./backend/monitoring/prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+    depends_on:
+      - backend-1
+      - backend-2
+      - backend-3
+      - mongodb-exporter
+      - redis-exporter
+    networks:
+      - shadiro-prod-net
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: shadiro-grafana-prod
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./backend/monitoring/grafana/provisioning/datasources/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+    depends_on:
+      - prometheus
+    networks:
+      - shadiro-prod-net
+
+  mongodb-exporter:
+    image: percona/mongodb_exporter:0.40.0
+    container_name: shadiro-mongodb-exporter-prod
+    restart: unless-stopped
+    ports:
+      - "9216:9216"
+    command:
+      - "--mongodb.uri=mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-secure_root_password_change_in_production}@mongodb-node-1:27017/admin?authSource=admin"
+      - "--collect-all"
+    depends_on:
+      mongodb-init:
+        condition: service_completed_successfully
+    networks:
+      - shadiro-prod-net
+
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.58.0-alpine
+    container_name: shadiro-redis-exporter-prod
+    restart: unless-stopped
+    ports:
+      - "9121:9121"
+    command:
+      - "--redis.addr=redis://redis-node-1:6379"
+      - "--redis.cluster"
+    depends_on:
+      redis-init:
+        condition: service_completed_successfully
+    networks:
+      - shadiro-prod-net
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VOLUMES & NETWORKS DEFINITIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+volumes:
+  mongodb_data_1:
+    driver: local
+  mongodb_data_2:
+    driver: local
+  mongodb_data_3:
+    driver: local
+  redis_data_1:
+    driver: local
+  redis_data_2:
+    driver: local
+  redis_data_3:
+    driver: local
+  redis_data_4:
+    driver: local
+  redis_data_5:
+    driver: local
+  redis_data_6:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  shadiro-prod-net:
+    driver: bridge
+    name: shadiro-prod-net

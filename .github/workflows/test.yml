@@ -1,0 +1,87 @@
+name: Test & Lint CI
+
+on:
+  push:
+    branches: [main, master, dev, staging]
+  pull_request:
+    branches: [main, master, dev, staging]
+
+jobs:
+  backend-lint-and-test:
+    name: Backend Lint and Test
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+    env:
+      APP_ENV: test
+      MONGO_URL: mongodb://localhost:27017/shadiro_test
+      DB_NAME: shadiro_test
+      REDIS_URL: redis://localhost:6379/0
+      JWT_SECRET_KEY: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+      JWT_ALGORITHM: HS256
+      RAZORPAY_KEY_ID: test_key
+      RAZORPAY_KEY_SECRET: test_secret
+      RAZORPAY_WEBHOOK_SECRET: test_webhook
+      ALLOWED_ORIGINS: http://localhost:3000
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install Backend Dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint Checks (Black & Isort & Flake8)
+        working-directory: backend
+        run: |
+          black --check core/ api/ middleware/ main.py || echo "Black formatting warnings"
+          isort --check-only core/ api/ middleware/ main.py || echo "Isort import sorting warnings"
+          flake8 core/ api/ middleware/ main.py --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Compile Backend
+        run: python -m compileall backend/core backend/middleware backend/app/api/v1 backend/routers backend/main.py
+
+      - name: Run Backend Unit Tests
+        working-directory: backend
+        run: pytest tests/test_security_middleware.py tests/test_catalog_validation.py tests/test_auth_tokens.py -q
+
+  frontend-build:
+    name: Frontend Build and Lint
+    runs-on: ubuntu-latest
+    env:
+      CI: false
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: npm ci --no-audit --progress=false
+
+      - name: Build Next.js Application
+        working-directory: frontend
+        run: npm run build

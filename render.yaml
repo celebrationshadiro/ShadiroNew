@@ -1,0 +1,72 @@
+services:
+  - type: keyvalue
+    name: shadiro-redis
+    plan: starter
+    region: oregon
+    ipAllowList: []
+
+  - type: web
+    name: shadiro-api
+    runtime: docker
+    rootDir: backend
+    plan: starter
+    region: oregon
+    healthCheckPath: /health/ready
+    autoDeploy: true
+    envVars:
+      - key: APP_NAME
+        value: Shadiro API
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: DB_NAME
+        value: shadiro
+      - key: MONGO_URL
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: shadiro-redis
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"
+      - key: JWT_REFRESH_TOKEN_EXPIRE_DAYS
+        value: "7"
+      - key: ALLOWED_ORIGINS
+        value: https://shadiro.com,https://www.shadiro.com,http://localhost:3000,http://127.0.0.1:3000
+      - key: REQUEST_MAX_BODY_SIZE_BYTES
+        value: "2097152"
+      - key: RATE_LIMIT_ENABLED
+        value: "true"
+      - key: RATE_LIMIT_AUTH_PER_MINUTE
+        value: "10"
+      - key: RATE_LIMIT_AUTH_BURST
+        value: "5"
+      - key: RATE_LIMIT_PUBLIC_PER_MINUTE
+        value: "120"
+      - key: RATE_LIMIT_PUBLIC_BURST
+        value: "40"
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false
+
+  - type: web
+    name: shadiro-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci --no-audit --progress=false && npm run build
+    staticPublishPath: build
+    plan: starter
+    region: oregon
+    autoDeploy: true
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://api.shadiro.com/api
+      - key: REACT_APP_BACKEND_URL
+        value: https://api.shadiro.com

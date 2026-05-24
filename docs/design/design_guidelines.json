@@ -1,0 +1,184 @@
+{
+  "design_system": {
+    "typography": {
+      "font_family": {
+        "heading": "Playfair Display, serif",
+        "body": "DM Sans, sans-serif",
+        "accent": "Great Vibes, cursive"
+      },
+      "scale": {
+        "h1": "text-5xl md:text-7xl font-bold tracking-tight",
+        "h2": "text-4xl md:text-5xl font-semibold tracking-tight",
+        "h3": "text-2xl md:text-3xl font-medium",
+        "body_lg": "text-lg leading-relaxed",
+        "body_base": "text-base leading-relaxed",
+        "caption": "text-sm text-muted-foreground uppercase tracking-widest"
+      }
+    },
+    "colors": {
+      "theme": "light",
+      "palette": {
+        "primary": {
+          "DEFAULT": "#BE185D",
+          "foreground": "#FFFFFF",
+          "description": "Festive Pink - Use for primary CTAs and key brand moments"
+        },
+        "secondary": {
+          "DEFAULT": "#F59E0B",
+          "foreground": "#FFFFFF",
+          "description": "Celebration Gold - Use for premium packages and ratings"
+        },
+        "accent": {
+          "DEFAULT": "#8B5CF6",
+          "foreground": "#FFFFFF",
+          "description": "Royal Purple - Use for secondary actions and gradients"
+        },
+        "background": {
+          "DEFAULT": "#FAFAF9",
+          "paper": "#FFFFFF",
+          "subtle": "#F5F5F4"
+        },
+        "text": {
+          "primary": "#1C1917",
+          "secondary": "#57534E",
+          "muted": "#A8A29E"
+        }
+      },
+      "gradients": {
+        "brand": "bg-gradient-to-r from-pink-600 to-purple-600",
+        "gold": "bg-gradient-to-r from-amber-400 to-yellow-600",
+        "subtle": "bg-gradient-to-b from-stone-50 to-white"
+      }
+    },
+    "spacing": {
+      "container_padding": "px-4 md:px-8 lg:px-12",
+      "section_spacing": "py-16 md:py-24",
+      "element_spacing": "space-y-6"
+    },
+    "visual_enhancers": {
+      "radius": "rounded-xl",
+      "shadows": {
+        "card": "shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+        "hover": "shadow-[0_8px_30px_rgb(0,0,0,0.12)]",
+        "glow": "shadow-[0_0_20px_rgba(190,24,93,0.3)]"
+      },
+      "glassmorphism": "bg-white/80 backdrop-blur-md border border-white/20",
+      "borders": "border border-stone-200"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8 rounded-full font-medium transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20",
+      "secondary": "bg-white text-primary border-2 border-primary/20 hover:border-primary/50 h-12 px-8 rounded-full font-medium transition-all hover:bg-primary/5",
+      "ghost": "hover:bg-stone-100 text-stone-600 hover:text-stone-900 h-10 px-4 rounded-lg"
+    },
+    "cards": {
+      "vendor": "group relative overflow-hidden rounded-2xl bg-white border border-stone-100 shadow-card hover:shadow-hover transition-all duration-300",
+      "package": "relative p-8 rounded-2xl bg-white border border-stone-200 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1"
+    },
+    "inputs": {
+      "default": "h-12 rounded-lg border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+    }
+  },
+  "layout_strategies": {
+    "grid_system": {
+      "bento": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[300px]",
+      "listing": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8",
+      "features": "grid grid-cols-1 md:grid-cols-3 gap-12"
+    },
+    "containers": {
+      "main": "max-w-7xl mx-auto w-full",
+      "narrow": "max-w-4xl mx-auto w-full"
+    }
+  },
+  "assets": {
+    "images": {
+      "hero": {
+        "url": "https://images.unsplash.com/photo-1766910699971-2fb00922eefc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGNvdXBsZSUyMHBsYW5uaW5nJTIwd2VkZGluZ3xlbnwwfHx8fDE3NzAwMzIyNjB8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Happy couple planning their wedding on a beach",
+        "category": "hero"
+      },
+      "categories": {
+        "venues": {
+          "url": "https://images.unsplash.com/photo-1761110787206-2cc164e4913c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjB3ZWRkaW5nJTIwdmVudWUlMjBpbnRlcmlvcnxlbnwwfHx8fDE3NzAwMzIyMTd8MA&ixlib=rb-4.1.0&q=85",
+          "alt": "Luxury wedding venue interior with chandeliers"
+        },
+        "makeup": {
+          "url": "https://images.unsplash.com/photo-1677691257237-3294c7fd18a5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwxfHxicmlkYWwlMjBtYWtldXAlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzAwMzIyMjJ8MA&ixlib=rb-4.1.0&q=85",
+          "alt": "Bridal makeup portrait"
+        },
+        "photography": {
+          "url": "https://images.unsplash.com/photo-1629120881990-0c5b979884bc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwcGhvdG9ncmFwaGVyJTIwY2FtZXJhfGVufDB8fHx8MTc3MDAzMjIyNXww&ixlib=rb-4.1.0&q=85",
+          "alt": "Wedding photographer capturing moments"
+        },
+        "decor": {
+          "url": "https://images.unsplash.com/photo-1769812343322-f4a6e73c8aa7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHwxfHxldmVudCUyMGZsb3JhbCUyMGRlY29yYXRpb258ZW58MHx8fHwxNzcwMDMyMjI2fDA&ixlib=rb-4.1.0&q=85",
+          "alt": "Elegant floral table decoration"
+        },
+        "catering": {
+          "url": "https://images.unsplash.com/photo-1769638913609-aa66bedf24d9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTN8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwY2F0ZXJpbmclMjBidWZmZXR8ZW58MHx8fHwxNzcwMDMyMjMxfDA&ixlib=rb-4.1.0&q=85",
+          "alt": "Gourmet catering buffet spread"
+        },
+        "entertainment": {
+          "url": "https://images.unsplash.com/photo-1663668567002-6190b578c308?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHwxfHxESiUyMHBhcnR5JTIwY3Jvd2QlMjBsaWdodHN8ZW58MHx8fHwxNzcwMDMyMjQ3fDA&ixlib=rb-4.1.0&q=85",
+          "alt": "DJ performing at event"
+        },
+        "transport": {
+          "url": "https://images.unsplash.com/photo-1761671612738-2ac97bc59141?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxNzV8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB3ZWRkaW5nJTIwY2FyfGVufDB8fHx8MTc3MDAzMjI1MXww&ixlib=rb-4.1.0&q=85",
+          "alt": "Luxury wedding car with bride"
+        },
+        "mehandi": {
+          "url": "https://images.unsplash.com/photo-1674884060571-96a46a9a7a72?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzV8MHwxfHNlYXJjaHwxfHxtZWhhbmRpJTIwZGVzaWduJTIwaGFuZHN8ZW58MHx8fHwxNzcwMDMyMjU2fDA&ixlib=rb-4.1.0&q=85",
+          "alt": "Intricate Mehandi design on hands"
+        }
+      },
+      "ui": {
+        "team_meeting": "https://images.unsplash.com/photo-1693386556810-43d9451bdda5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHw0fHxldmVudCUyMHBsYW5uZXIlMjB0ZWFtJTIwbWVldGluZ3xlbnwwfHx8fDE3NzAwMzIyNjV8MA&ixlib=rb-4.1.0&q=85",
+        "placeholder_avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+      }
+    },
+    "icons": {
+      "library": "lucide-react",
+      "style": "stroke-width-1.5"
+    }
+  },
+  "instructions_to_main_agent": {
+    "general": [
+      "Use the 'Playfair Display' font for all Headings (h1-h3) to give a premium/wedding feel.",
+      "Use 'DM Sans' for all body text for high readability.",
+      "Implement a 'Light Mode' first approach. Dark mode should be deep purple/midnight blue, not black.",
+      "Use the provided image URLs for the respective categories. DO NOT use placeholders.",
+      "Ensure all interactive elements have hover states (scale up, shadow increase, or color shift).",
+      "Use 'Glassmorphism' (white/80 + blur) for cards placed over images."
+    ],
+    "layout_specifics": {
+      "hero_section": "Full-width background image (use hero image) with a central 'Glass' search card. Headline: 'Plan Your Dream Event'.",
+      "vendor_grid": "Use a Masonry or Bento grid layout. Don't just use equal-sized squares. Highlight 'Featured' vendors with larger cards.",
+      "packages": "Display Silver/Gold/Platinum as vertical cards with a 'Most Popular' ribbon on Gold."
+    },
+    "animations": {
+      "entrance": "Fade-in up (y: 20 -> 0, opacity: 0 -> 1) for all cards.",
+      "hover": "Scale 1.02 on hover for vendor cards."
+    }
+  },
+  "universal_guidelines": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy",
+    "Use glass-morphism effects with backdrop filters (12-24px blur)",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯📚🎭🎬🎪🎉🎊🎁🎀🎂🍰🎈🎨🎰💰💵💳🏦💎🪙💸🤑📊📈📉💹🔢🏆🥇 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN",
+    "Prioritize using pre-existing components from src/components/ui when applicable",
+    "Create new components that match the style and conventions of existing components when needed",
+    "Examine existing components to understand the project's component patterns before creating new ones",
+    "Components MUST use named exports (export const ComponentName = ...)",
+    "Pages MUST use default exports (export default function PageName() {...})",
+    "Use sonner for toasts. Sonner component are located in /app/src/components/ui/sonner.tsx"
+  ]
+}
