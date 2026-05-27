@@ -109,3 +109,4 @@ android-sdk/
 # ── Project-specific Artifacts ───────────────────────────────────────────────
 memory/
 backend.worktrees/
+backend/venv/
