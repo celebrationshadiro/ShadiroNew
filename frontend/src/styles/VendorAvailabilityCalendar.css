@@ -1,0 +1,175 @@
+/* Vendor Availability Calendar Styling */
+
+.vendor-availability-card {
+  background: white;
+  border: 1px solid rgb(229, 229, 229);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.vendor-availability-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(24, 24, 24);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vendor-availability-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.vendor-availability-day-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgb(120, 120, 120);
+  padding: 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vendor-availability-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 2px solid rgb(209, 209, 209);
+  background: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgb(24, 24, 24);
+}
+
+.vendor-availability-day:hover:not(:disabled) {
+  border-color: rgb(70, 130, 180);
+  background: rgb(70, 130, 180) / 0.05;
+  transform: translateY(-2px);
+}
+
+.vendor-availability-day.available {
+  border-color: rgb(34, 197, 94);
+  background: rgb(34, 197, 94) / 0.05;
+}
+
+.vendor-availability-day.available:hover {
+  border-color: rgb(22, 163, 74);
+  background: rgb(34, 197, 94) / 0.1;
+}
+
+.vendor-availability-day.selected {
+  border-color: rgb(70, 130, 180);
+  background: rgb(70, 130, 180);
+  color: white;
+}
+
+.vendor-availability-day.selected:hover {
+  background: rgb(70, 130, 180);
+  opacity: 0.95;
+}
+
+.vendor-availability-day.past {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgb(229, 229, 229);
+  border-color: rgb(209, 209, 209);
+}
+
+.vendor-availability-day:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.vendor-availability-day-number {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.vendor-availability-day-icon {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: rgb(34, 197, 94);
+}
+
+.vendor-availability-day.selected .vendor-availability-day-icon {
+  color: white;
+}
+
+.vendor-availability-day-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  background: rgb(70, 130, 180);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.vendor-availability-empty-day {
+  aspect-ratio: 1;
+}
+
+/* Time Slot Selection */
+.vendor-availability-time-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.vendor-availability-slot {
+  padding: 1rem;
+  border: 2px solid rgb(209, 209, 209);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.vendor-availability-slot:hover {
+  border-color: rgb(70, 130, 180);
+  background: rgb(70, 130, 180) / 0.05;
+}
+
+.vendor-availability-slot.selected {
+  border-color: rgb(70, 130, 180);
+  background: rgb(70, 130, 180);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vendor-availability-card {
+    padding: 1rem;
+  }
+
+  .vendor-availability-calendar {
+    gap: 0.25rem;
+  }
+
+  .vendor-availability-day {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+
+  .vendor-availability-day-icon {
+    width: 12px;
+    height: 12px;
+  }
+}

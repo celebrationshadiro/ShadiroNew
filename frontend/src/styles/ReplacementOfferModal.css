@@ -1,0 +1,362 @@
+/* ReplacementOfferModal Styles */
+
+.replacement-offer-dialog {
+  max-width: 650px;
+}
+
+.cancellation-notice {
+  padding: 16px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  color: #92400e;
+}
+
+.notice-content h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #78350f;
+}
+
+.notice-content p {
+  font-size: 13px;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.refund-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #ecfdf5;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #065f46;
+}
+
+.refund-notice svg {
+  min-width: 16px;
+  flex-shrink: 0;
+}
+
+/* Replacement Section */
+
+.replacement-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.replacement-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.replacement-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.5px;
+}
+
+/* Loading State */
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 20px;
+  color: #6b7280;
+}
+
+.loading-state svg {
+  color: #3b82f6;
+}
+
+.loading-state p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Error State */
+
+.error-state {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  color: #7f1d1d;
+  font-size: 13px;
+}
+
+.error-state svg {
+  min-width: 20px;
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+/* Vendor Options */
+
+.vendor-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vendors-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.vendor-card {
+  position: relative;
+  padding: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.vendor-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.vendor-card.selected {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vendor-info h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.vendor-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.experience {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.vendor-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.detail-row.rating {
+  color: #d97706;
+  font-weight: 500;
+}
+
+.detail-row.rating .rating-text {
+  color: #6b7280;
+}
+
+.detail-row.price {
+  font-weight: 600;
+  color: #059669;
+}
+
+.selection-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #10b981;
+  color: white;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.selection-badge.visible {
+  display: flex;
+}
+
+.selection-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Action Buttons */
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.accept-btn {
+  flex: 1;
+  background: #10b981 !important;
+  color: white !important;
+}
+
+.accept-btn:hover:not(:disabled) {
+  background: #059669 !important;
+}
+
+/* No Vendors */
+
+.no-vendors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.no-vendors svg {
+  color: #f59e0b;
+  width: 32px;
+  height: 32px;
+}
+
+.no-vendors p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Divider */
+
+.divider {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d1d5db;
+  margin: 12px 0;
+  padding: 0 16px;
+  position: relative;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e5e7eb;
+  z-index: 0;
+}
+
+.divider {
+  position: relative;
+  z-index: 1;
+  background: white;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Refund Option */
+
+.refund-option {
+  padding: 16px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.refund-option h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.refund-option p {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.refund-btn {
+  width: 100% !important;
+}
+
+/* Info Box */
+
+.info-box {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #1e40af;
+  line-height: 1.4;
+}
+
+.info-box svg {
+  min-width: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.info-box strong {
+  color: #1e3a8a;
+}
+
+/* Responsive */
+
+@media (max-width: 640px) {
+  .replacement-offer-dialog {
+    max-width: 100%;
+  }
+
+  .vendors-list {
+    grid-template-columns: 1fr;
+  }
+
+  .divider {
+    padding: 0 8px;
+  }
+}

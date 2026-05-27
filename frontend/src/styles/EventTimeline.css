@@ -1,0 +1,293 @@
+/* Event Timeline Styling */
+
+.event-timeline-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.event-timeline-header {
+  background: linear-gradient(135deg, rgba(70, 130, 180, 0.1), rgba(255, 0, 127, 0.1));
+  border: 1px solid rgba(70, 130, 180, 0.2);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.event-timeline-header h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: rgb(24, 24, 24);
+  margin-bottom: 1.5rem;
+}
+
+.event-timeline-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.event-timeline-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-timeline-info-label {
+  font-size: 0.875rem;
+  color: rgb(120, 120, 120);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.event-timeline-info-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgb(24, 24, 24);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Phase Card */
+.event-timeline-phase {
+  border: 2px solid rgb(229, 229, 229);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.event-timeline-phase:hover {
+  border-color: rgb(70, 130, 180);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.event-timeline-phase.current {
+  border-color: rgb(70, 130, 180);
+  background: rgba(70, 130, 180, 0.05);
+  box-shadow: 0 10px 25px -5px rgba(70, 130, 180, 0.1);
+}
+
+.event-timeline-phase.completed {
+  border-color: rgb(34, 197, 94);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.event-timeline-phase-content {
+  padding: 1.5rem;
+}
+
+.event-timeline-phase-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.event-timeline-phase-icon {
+  padding: 0.75rem;
+  background: rgb(250, 250, 249);
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-timeline-phase-info {
+  flex: 1;
+}
+
+.event-timeline-phase-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-timeline-phase-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(24, 24, 24);
+}
+
+.event-timeline-phase-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgb(70, 130, 180);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.event-timeline-phase-badge.completed {
+  background: rgb(34, 197, 94);
+}
+
+.event-timeline-phase-duration {
+  font-size: 0.875rem;
+  color: rgb(120, 120, 120);
+}
+
+.event-timeline-phase-progress-label {
+  text-align: right;
+}
+
+.event-timeline-phase-progress-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgb(70, 130, 180);
+}
+
+.event-timeline-phase-progress-text {
+  font-size: 0.75rem;
+  color: rgb(120, 120, 120);
+}
+
+.event-timeline-progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  background: rgb(209, 209, 209);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.event-timeline-progress-fill {
+  height: 100%;
+  background: rgb(70, 130, 180);
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+
+.event-timeline-tasks {
+  max-height: 24rem;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.event-timeline-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(229, 229, 229);
+}
+
+.event-timeline-task {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.event-timeline-task-checkbox {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgb(209, 209, 209);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.event-timeline-task-checkbox.completed {
+  background: rgb(34, 197, 94);
+  border-color: rgb(34, 197, 94);
+}
+
+.event-timeline-task-checkbox svg {
+  color: white;
+}
+
+.event-timeline-task-text {
+  font-size: 0.875rem;
+  color: rgb(88, 88, 88);
+}
+
+.event-timeline-task-text.completed {
+  color: rgb(34, 197, 94);
+  text-decoration: line-through;
+}
+
+.event-timeline-expand-hint {
+  text-align: center;
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(120, 120, 120);
+}
+
+/* Tips Section */
+.event-timeline-tips {
+  background: rgb(239, 246, 255);
+  border: 1px solid rgb(191, 219, 254);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.event-timeline-tips-icon {
+  color: rgb(37, 99, 235);
+  flex-shrink: 0;
+}
+
+.event-timeline-tips-content h4 {
+  font-weight: 600;
+  color: rgb(30, 58, 138);
+  margin-bottom: 0.5rem;
+}
+
+.event-timeline-tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgb(30, 58, 138);
+  space: 0.25rem;
+}
+
+.event-timeline-tips-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .event-timeline-header {
+    padding: 1.5rem;
+  }
+
+  .event-timeline-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .event-timeline-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .event-timeline-phase-content {
+    padding: 1rem;
+  }
+
+  .event-timeline-phase-header {
+    gap: 0.75rem;
+  }
+
+  .event-timeline-phase-icon {
+    padding: 0.5rem;
+  }
+
+  .event-timeline-tips {
+    flex-direction: column;
+  }
+
+  .event-timeline-expand-hint {
+    font-size: 0.65rem;
+  }
+}

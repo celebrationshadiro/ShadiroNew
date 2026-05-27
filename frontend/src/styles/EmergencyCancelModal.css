@@ -1,0 +1,227 @@
+/* EmergencyCancelModal Styles */
+
+.emergency-cancel-dialog {
+  max-width: 500px;
+}
+
+.emergency-warning-box {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #7f1d1d;
+}
+
+.emergency-warning-box svg {
+  min-width: 20px;
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.emergency-warning-box h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.emergency-warning-box ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.emergency-warning-box li {
+  padding: 4px 0;
+}
+
+/* Booking Info */
+
+.booking-info {
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 6px;
+}
+
+.booking-info h4 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.5px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.info-row span {
+  color: #6b7280;
+}
+
+.info-row strong {
+  color: #1f2937;
+}
+
+/* Reason Section */
+
+.reason-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reason-section label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.reason-textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.reason-section p {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Success Message */
+
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #ecfdf5;
+  border: 2px solid #10b981;
+  border-radius: 50%;
+  font-size: 24px;
+  color: #10b981;
+  font-weight: 700;
+}
+
+.success-message h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.success-message p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Error Message */
+
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #fee2e2;
+  border: 2px solid #ef4444;
+  border-radius: 50%;
+  font-size: 24px;
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.error-message h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.error-message p {
+  font-size: 14px;
+  color: #7f1d1d;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Replacement Info */
+
+.replacement-info {
+  padding: 12px 16px;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1e40af;
+}
+
+.replacement-info h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.replacement-info p {
+  margin: 0;
+}
+
+/* Important Notice */
+
+.important-notice {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #92400e;
+}
+
+.important-notice svg {
+  min-width: 18px;
+  flex-shrink: 0;
+  color: #f59e0b;
+}
+
+.important-notice div {
+  line-height: 1.5;
+}
+
+.important-notice strong {
+  color: #78350f;
+}

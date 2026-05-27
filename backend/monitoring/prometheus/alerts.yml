@@ -1,0 +1,181 @@
+groups:
+  - name: backend-latency-and-errors
+    rules:
+      - alert: BookingLatencyP95High
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (
+              rate(http_request_duration_seconds_bucket{path=~"/api/bookings.*",method=~"POST|PUT|PATCH"}[5m])
+            )
+          ) > 1.0
+          and
+          sum(rate(http_requests_total{path=~"/api/bookings.*",method=~"POST|PUT|PATCH"}[5m])) > 1
+        for: 10m
+        labels:
+          severity: warning
+          service: backend
+          team: platform
+        annotations:
+          summary: "Booking API p95 latency high"
+          description: "Booking write-flow p95 > 1.0s for 10m."
+
+      - alert: BookingLatencyP95Critical
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (
+              rate(http_request_duration_seconds_bucket{path=~"/api/bookings.*",method=~"POST|PUT|PATCH"}[5m])
+            )
+          ) > 1.8
+          and
+          sum(rate(http_requests_total{path=~"/api/bookings.*",method=~"POST|PUT|PATCH"}[5m])) > 1
+        for: 5m
+        labels:
+          severity: critical
+          service: backend
+          team: platform
+        annotations:
+          summary: "Booking API p95 latency critical"
+          description: "Booking write-flow p95 > 1.8s for 5m."
+
+      - alert: PaymentLatencyP95High
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (
+              rate(http_request_duration_seconds_bucket{path=~"/api/payments/verify.*|/api/payments/create-order.*",method="POST"}[5m])
+            )
+          ) > 1.2
+          and
+          sum(rate(http_requests_total{path=~"/api/payments/verify.*|/api/payments/create-order.*",method="POST"}[5m])) > 0.5
+        for: 10m
+        labels:
+          severity: warning
+          service: backend
+          team: payments
+        annotations:
+          summary: "Payment API p95 latency high"
+          description: "Payment flow p95 > 1.2s for 10m."
+
+      - alert: PaymentLatencyP95Critical
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (
+              rate(http_request_duration_seconds_bucket{path=~"/api/payments/verify.*|/api/payments/create-order.*",method="POST"}[5m])
+            )
+          ) > 2.0
+          and
+          sum(rate(http_requests_total{path=~"/api/payments/verify.*|/api/payments/create-order.*",method="POST"}[5m])) > 0.5
+        for: 5m
+        labels:
+          severity: critical
+          service: backend
+          team: payments
+        annotations:
+          summary: "Payment API p95 latency critical"
+          description: "Payment flow p95 > 2.0s for 5m."
+
+      - alert: HttpErrorRateSpikeWarning
+        expr: |
+          (
+            sum(rate(http_errors_total{status_class=~"4xx|5xx"}[5m]))
+            /
+            clamp_min(sum(rate(http_requests_total[5m])), 1)
+          ) > 0.03
+          and
+          sum(rate(http_requests_total[5m])) > 10
+        for: 5m
+        labels:
+          severity: warning
+          service: backend
+          team: platform
+        annotations:
+          summary: "HTTP error rate spike"
+          description: "Error ratio > 3% for 5m at traffic > 10 rps."
+
+      - alert: HttpErrorRateSpikeCritical
+        expr: |
+          (
+            sum(rate(http_errors_total{status_class=~"4xx|5xx"}[5m]))
+            /
+            clamp_min(sum(rate(http_requests_total[5m])), 1)
+          ) > 0.07
+          and
+          sum(rate(http_requests_total[5m])) > 10
+        for: 3m
+        labels:
+          severity: critical
+          service: backend
+          team: platform
+        annotations:
+          summary: "HTTP error rate critical spike"
+          description: "Error ratio > 7% for 3m at traffic > 10 rps."
+
+  - name: mongodb-saturation
+    rules:
+      - alert: MongoConnectionUsageHigh
+        expr: |
+          (
+            mongodb_ss_connections{conn_type="current"}
+            /
+            clamp_min(
+              mongodb_ss_connections{conn_type="current"} + mongodb_ss_connections{conn_type="available"},
+              1
+            )
+          ) > 0.80
+        for: 10m
+        labels:
+          severity: warning
+          service: mongodb
+          team: platform
+        annotations:
+          summary: "MongoDB connection usage high"
+          description: "Mongo current connections > 80% of total capacity for 10m."
+
+      - alert: MongoConnectionUsageCritical
+        expr: |
+          (
+            mongodb_ss_connections{conn_type="current"}
+            /
+            clamp_min(
+              mongodb_ss_connections{conn_type="current"} + mongodb_ss_connections{conn_type="available"},
+              1
+            )
+          ) > 0.90
+        for: 5m
+        labels:
+          severity: critical
+          service: mongodb
+          team: platform
+        annotations:
+          summary: "MongoDB connection usage critical"
+          description: "Mongo current connections > 90% of total capacity for 5m."
+
+      - alert: MongoWiredTigerCachePressure
+        expr: |
+          (
+            mongodb_mongod_wiredtiger_cache_bytes_currently_in_cache
+            /
+            clamp_min(mongodb_mongod_wiredtiger_cache_max_bytes_configured, 1)
+          ) > 0.85
+        for: 10m
+        labels:
+          severity: warning
+          service: mongodb
+          team: platform
+        annotations:
+          summary: "MongoDB WiredTiger cache pressure"
+          description: "WiredTiger cache usage > 85% for 10m."
+
+      - alert: MongoQueueBacklogCritical
+        expr: mongodb_ss_globalLock_currentQueue_total > 25
+        for: 5m
+        labels:
+          severity: critical
+          service: mongodb
+          team: platform
+        annotations:
+          summary: "MongoDB queue backlog critical"
+          description: "Global lock queue > 25 for 5m."
